@@ -23,17 +23,17 @@ describe('The Investment Class', () => {
     it('should successfully call with valid data', async () => {
       const inputParams = {
         walletId: '56b540e9-927a-4ced-a1be-61b059f33f2b',
-        currency: 'GBP',
-        serviceProvider: 'Nivaura',
+        currency: 'gbp',
       };
 
       await pSdk.investments.depositRequest(inputParams);
 
       expect(Requester.execute).toHaveBeenCalledWith(
         expect.objectContaining({
-          method: 'POST',
-          data: inputParams,
-          url: 'http://localhost:8082/investment/wallet/deposit-request',
+          method: 'GET',
+          params: {},
+          url:
+            'http://localhost:8082/wallets/56b540e9-927a-4ced-a1be-61b059f33f2b/deposit-request/gbp',
         }),
       );
     });
@@ -41,7 +41,6 @@ describe('The Investment Class', () => {
     it('should fail validation if one of the parameters is missing', async () => {
       const inputParams = {
         currency: 'GBP',
-        serviceProvider: 'Nivaura',
       };
 
       expect.assertions(2);
@@ -56,7 +55,6 @@ describe('The Investment Class', () => {
     it('should fail validations if the currency is missing', async () => {
       const inputParams = {
         walletId: '323423-adabab',
-        serviceProvider: 'Nivaura',
       };
 
       expect.assertions(2);

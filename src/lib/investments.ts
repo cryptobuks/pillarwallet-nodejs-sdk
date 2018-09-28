@@ -3,7 +3,6 @@ import { AxiosPromise } from 'axios';
 import { Configuration } from './configuration';
 import { HttpEndpoints } from './constants/httpEndpoints';
 // Request Configuration
-import { default as postConfiguration } from '../utils/requester-configurations/post';
 import { default as getConfiguration } from '../utils/requester-configurations/get';
 
 // Import Validation Schemas
@@ -15,17 +14,20 @@ export class Investments extends Configuration {
    * @name depositRequest
    * @description method to call deposit request api endpoint on platform-investments
    *
-   * @param {InvestmentsDepositRequest} data
+   * @param {InvestmentsDepositRequest} params
    * @returns {AxiosPromise}
    */
-  depositRequest(data: InvestmentsDepositRequest): AxiosPromise {
+  depositRequest(params: InvestmentsDepositRequest): AxiosPromise {
+    let slug: string = HttpEndpoints.INVESTMENTS_DEPOSIT_REQUEST;
+    slug = slug.replace(/{walletId}/, params.walletId);
+    slug = slug.replace(/{currency}/, params.currency);
+
     return this.executeRequest({
-      data,
+      params,
+      sendParams: false,
       schema: investmentsDepositRequestSchema,
-      defaultRequest: postConfiguration,
-      url:
-        Configuration.accessKeys.investmentsUrl +
-        HttpEndpoints.INVESTMENTS_DEPOSIT_REQUEST,
+      defaultRequest: getConfiguration,
+      url: `${Configuration.accessKeys.investmentsUrl}${slug}`,
     });
   }
 

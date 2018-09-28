@@ -13,7 +13,7 @@ export enum HttpEndpoints {
   CONNECTION_BLOCK = '/connection/block',
   CONNECTION_MUTE = '/connection/mute',
   NOTIFICATION_LIST = '/notification/list',
-  INVESTMENTS_DEPOSIT_REQUEST = '/investment/wallet/deposit-request',
+  INVESTMENTS_DEPOSIT_REQUEST = '/wallets/{walletId}/deposit-request/{currency}',
   INVESTMENTS_USER_ICO = '/users',
   USER_UPDATE = '/user/update',
   USER_INFO = '/user/info',
